@@ -1,0 +1,92 @@
+# train, test, deploy
+runner_type: deploy_runner
+general:
+    n_class: 8
+    input_channel: 32
+    batch_size: 1
+    epoch: 20
+    workspace: ./checkpoints
+
+model:
+    pipeline_name: hydranet
+    backbone_name: resnet_50
+    head_name: classify_head
+    feature_dim: 512
+
+data:
+    mean: [1.37709322e-03, -1.25590711e-04, -9.78099246e-04, -1.54149900e-03,
+           -3.65268857e-04, -8.14466175e-04,  2.03103179e-05, -5.70506880e-04,
+           -1.06753382e-03, -6.38036276e-04,  4.43398198e-03, -4.42797880e-05,
+           4.58709032e-03, -4.00574380e-04,  1.18625627e-04,  1.28054139e-03,
+           -1.44552181e-03,  4.22923689e-03, -4.25630181e-04,  1.94065065e-03,
+           -1.03658997e-03, -2.67863576e-04, -6.58665125e-04, -1.81927911e-04,
+           -7.28778903e-04, -6.39883455e-04, -6.54817118e-03, -5.36829814e-04,
+           -1.65058066e-03,  5.92751761e-03,  1.98298852e-03,  9.49096881e-04]
+    std: [156.21795043, 169.71135015, 140.4069441,  136.95477891, 156.0404305,
+          133.2414394,   72.3127324,  148.45542915, 126.45601414, 142.92104616,
+          103.65128654, 100.07135721, 127.29811678, 123.69611457, 193.43011533,
+          155.93406002, 156.41003176, 257.58660447, 129.15109456, 107.70340885,
+          104.44757708, 101.69828631, 121.41448007, 192.81180237, 130.66332279,
+          173.7997312,  233.96898104, 166.46676249, 141.72560624, 221.56806554,
+          220.0013304,  306.79795205]
+    win_size: 1000
+    step_size: 100
+    ssvep_cls_num: 4
+    low_freq: 1
+    high_freq: 30
+    sample_rate: 1000
+    enable_filter: True
+
+class_id_map: {
+    0: ["gjc1/by", "gjc2/by", "gjc3/by", "gjc4/by", "gjc5/by"],
+    1: ["gjc1/ssvep", "gjc2/ssvep", "gjc3/ssvep", "gjc4/ssvep", "gjc5/ssvep"],
+    2: ["wxr1/by", "wxr2/by", "wxr3/by", "wxr4/by", "wxr5/by"],
+    3: ["wxr1/ssvep", "wxr2/ssvep", "wxr3/ssvep", "wxr4/ssvep", "wxr5/ssvep"],
+    4: ["yl1/by", "yl2/by", "yl3/by", "yl4/by", "yl5/by"],
+    5: ["yl1/ssvep", "yl2/ssvep", "yl3/ssvep", "yl4/ssvep", "yl5/ssvep"],
+    6: ["zqy1/by", "zqy2/by", "zqy3/by", "zqy4/by", "zqy5/by"],
+    7: ["zqy1/ssvep", "zqy2/ssvep", "zqy3/ssvep", "zqy4/ssvep", "zqy5/ssvep"]
+}
+
+optim.params:
+  weight_decay: 1.e-5
+evaluator:
+    type: evaluator
+
+train:
+    type: base_trainer
+    dataset_type: base_dataset
+    dataset_path: ./data/train.jsonl
+    optimizer: Adam
+    initial_lr: 1.0e-4
+    lr_strategy: Cosine
+    criterions: NLLLoss #CELoss
+
+val:
+    dataset_path: ./data/val.jsonl
+
+test:
+    model_path: ./checkpoints/2024.04.27/11-0.7806.pt
+    dataset_path: ./data/val.jsonl
+
+inference:
+    dataset_path: ./data/feature_file.jsonl
+    model_path: ./checkpoints/2024.04.27/14-0.7527.onnx
+    sample_size: 1
+    feature_file: "./data/feature_file.jsonl"
+    valid_identity: ["gjc", "wxr", "yl", "zqy"]
+    conf_thres: 0.3
+    static_num: 30
+    identity_map: {
+        "gjc": 0,
+        "wxr": 1,
+        "yl": 2,
+        "zqy": 3
+    }
+
+deploy:
+    model_path: ./checkpoints/2024.04.27/14-0.7527.pt
+
+
+
+    

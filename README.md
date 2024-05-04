@@ -14,16 +14,24 @@ python convert_data.py --config_path=../config/config.yaml
 # train
 modify config.yaml for user config
 Note: runner_type = train_runner
-'''python run.py --config_path=config/config.yaml'''
+'''
+python run.py --config_path=config/config.yaml
+'''
 
 # test
 runner_type = test_runner
-'''python run.py --config_path=config/config.yaml'''
+'''
+python run.py --config_path=config/config.yaml
+'''
 
 # deploy
 suported pt to onnx
 runner_type = deploy_runner
-'''python run.py --config_path=config/config.yaml'''
+'''
+python run.py --config_path=config/config.yaml
+'''
 
 # infer demo
-'''python infer.py'''
+'''
+python infer.py
+'''

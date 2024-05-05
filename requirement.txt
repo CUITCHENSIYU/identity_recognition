@@ -1,0 +1,8 @@
+torch
+torchvision
+tqdm
+onnxruntime-gpu
+onnxruntime
+numpy
+collections
+scipy

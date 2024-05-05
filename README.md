@@ -37,3 +37,15 @@ python run.py --config_path=config/config.yaml
 ```
 python infer.py
 ```
+input :EEG data(type = np.array), condition: time length>=1s.
+return: identity_map：
+| id | user_name | score | count |
+| :----: | :----: | :----: | :----: |
+| 0 | gjc | - | - |
+| 1 | wxc | - | - |
+| 2 | yl | - | - |
+| 3 | zqy | - | - |
+| -1 | unknown | 0 | 0 |
+
+if you want add or delete, please update config.yaml
+![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/6aba7815-a4e8-4004-b481-858ac0865719)

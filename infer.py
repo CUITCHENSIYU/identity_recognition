@@ -32,15 +32,10 @@ class Inference():
         self.identity_database = identity_feature_map_maker.run(self.onnx_session)
     
     def compute_distance(self, feat1, feat2):
-        # feat1 = feat1.squeeze()
-        # euclidean_distance = np.linalg.norm(feat1 - feat2)
-        # score = 1 / (1 + euclidean_distance)
         dot_product = np.dot(feat1, feat2)
         norm_vector1 = np.linalg.norm(feat1)
         norm_vector2 = np.linalg.norm(feat2)
         score = dot_product / (norm_vector1 * norm_vector2)
-
-        # score = np.matmul(feat1, feat2.T)
         return score
 
     def match(self, feat):
@@ -74,12 +69,15 @@ class Inference():
                 "count": count,
                 "max_score": max_score})
         if len(results_tmp) == 0:
-            return {}
+            return {"id": -1,
+                    "count": 0,
+                    "score": 0}
         init_result = results_tmp.pop(0)
 
         identity_id = init_result["identity_id"]
         score = init_result["max_score"]
         max_count = init_result["count"]
+
         for result in results_tmp:
             if max_count < result["count"]:
                 max_count = result["count"]
@@ -104,15 +102,12 @@ class Inference():
 
         results = []
         for i, input in enumerate(tqdm(patchs)):
-            print(np.mean(input), np.std(input))
             input = torch.tensor(input, dtype=torch.float)
             input = torch.unsqueeze(input, 0)
             score, feat = self.onnx_session.run(None, {'input':input.cpu().numpy()})
             pred = score.argmax(axis=1)
-            print(f"pred={pred}")
             results.extend(self.match(feat))
-        for res in results:
-            print(res)
+        
         identity_map = self.compute_identity(results)
         return identity_map
     
@@ -133,7 +128,6 @@ if __name__ =="__main__":
     datas = []
     for files in data_files:
         data = np.load(files)
-        print(f"data={np.mean(data)}, {np.std(data)}")
         datas.append(data)
     data = np.concatenate(datas, 1)
     identity_map = inference.infer(data)

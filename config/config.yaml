@@ -75,7 +75,7 @@ inference:
     sample_size: 1
     feature_file: "./data/feature_file.jsonl"
     valid_identity: ["gjc", "wxr", "yl", "zqy"]
-    conf_thres: 0.3
+    conf_thres: 0.8
     static_num: 30
     identity_map: {
         "gjc": 0,

@@ -9,7 +9,7 @@ mkdir data & cd data
 ## create train.jsonl
 ```
 cd tools
-python convert_data.py --config_path=../config/config.yaml
+python convert_data.py --config_path=../config/config.yaml --data_file=$(your file path) --save_file=$(save path)
 ```
 ![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/74e9100f-e0eb-4532-b422-a6c91f1d9c54)
 

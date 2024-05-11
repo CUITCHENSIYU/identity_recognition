@@ -28,7 +28,8 @@ class BaseTrainer():
         self.cfg = cfg
         current_time = datetime.now()
         formatted_date = current_time.strftime("%Y.%m.%d")
-        self.workspace = os.path.join(self.cfg['general']['workspace'], formatted_date)
+        formatted_datetime = formatted_date + " " + current_time.strftime("%H:%M")
+        self.workspace = os.path.join(self.cfg['general']['workspace'], formatted_datetime)
         if not os.path.exists(self.workspace):
             os.makedirs(self.workspace)
 

@@ -9,9 +9,13 @@ import argparse
 import yaml
 import json
 import subprocess
+import shutil
+import platform
 from utils.filter import filter_multi
 from utils.sliding import sliding_window
 from utils.preprocess import descale
+
+system_name = platform.system()
 
 class ConvertData():
     def __init__(self, cfg) -> None:
@@ -84,16 +88,26 @@ class ConvertData():
         if os.path.exists(patch_dir) == False:
             os.makedirs(patch_dir)
         else:
-            command = f"rm -rf {patch_dir}/*"
-            result = subprocess.run(command, shell=True, capture_output=True, text=True)
-            print(f"remove exist patch file: {result}")
+            if system_name == "Linux":
+                command = f"rm -rf {patch_dir}/*"
+                result = subprocess.run(command, shell=True, capture_output=True, text=True)
+                print(f"remove exist patch file: {result}")
+            else:
+                shutil.rmtree(patch_dir)
+                print(f"remove exist patch dir {patch_dir}")
+                os.makedirs(patch_dir)
         if os.path.exists(target_dir) == False:
             os.makedirs(target_dir)
         else:
-            command = f"rm -rf {target_dir}/*"
-            result = subprocess.run(command, shell=True, capture_output=True, text=True)
-            print(f"remove exist target file: {result}")
-        
+            if system_name == "Linux":
+                command = f"rm -rf {target_dir}/*"
+                result = subprocess.run(command, shell=True, capture_output=True, text=True)
+                print(f"remove exist target file: {result}")
+            else:
+                shutil.rmtree(target_dir)
+                print(f"remove exist patch dir {target_dir}")
+                os.makedirs(target_dir)
+                
         paths = []
         for i in range(len(patchs)):
             patch_path = os.path.join(patch_dir, str(i)+".npy")
@@ -131,7 +145,7 @@ class ConvertData():
                 f.write('\n')
 
 parser = argparse.ArgumentParser(description="Training")
-parser.add_argument("--config_path", default="./configs/config.yaml", type=str)
+parser.add_argument("--config_path", default="./config/config.yaml", type=str)
 parser.add_argument("--data_file", default="", type=str)
 parser.add_argument("--save_file", default="", type=str)
 args = parser.parse_args()

@@ -91,10 +91,11 @@ class Inference():
 
         return {"id": identity_id,
                 "count": max_count,
-                "score": score}
+                "score": score[0]}
 
-    def infer(self, data):
-        data = descale(data)
+    def infer(self, data, prod_mode=False):
+        if prod_mode:
+            data = descale(data)
         if self.enable_filter:
             data = filter_multi(data, self.low_freq, self.high_freq, self.sample_rate)
         data = normlize(data, self.mean, self.std)
@@ -119,16 +120,17 @@ if __name__ =="__main__":
     inference = Inference(cfg)
 
     data_files = [
-        "/home/root/workspace/identity_recognition/data/yl/yl4/by/data/52.npy",
-        "/home/root/workspace/identity_recognition/data/yl/yl4/by/data/53.npy",
-        "/home/root/workspace/identity_recognition/data/yl/yl4/by/data/54.npy",
-        "/home/root/workspace/identity_recognition/data/yl/yl4/by/data/55.npy",
-        "/home/root/workspace/identity_recognition/data/yl/yl4/by/data/56.npy",
+        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/52.npy",
+        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/53.npy",
+        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/54.npy",
+        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/55.npy",
+        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/56.npy",
     ]
     datas = []
     for files in data_files:
         data = np.load(files)
         datas.append(data)
     data = np.concatenate(datas, 1)
-    identity_map = inference.infer(data)
+    # 如果是部署生产环境，prod_mode=True, 若是读取本地文件用于测试，prod_mode=False <default>
+    identity_map = inference.infer(data, prod_mode=False) 
     print(identity_map)

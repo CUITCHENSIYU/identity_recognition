@@ -1,3 +1,10 @@
+# install
+```
+cd identity_recognition
+python3 -m pip install -e .
+```
+Here `-e` means editable mode, which is optional.
+
 # prepare train/val data
 ```
 mkdir data & cd data

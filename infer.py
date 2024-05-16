@@ -4,10 +4,10 @@ import torch
 from collections import Counter
 from tqdm import tqdm
 
-from utils.make_identity_database import MakeIdentityDatabase
-from utils.filter import filter_multi
-from utils.sliding import sliding_window
-from utils.preprocess import descale, normlize
+from identity_recognition.utils.make_identity_database import MakeIdentityDatabase
+from identity_recognition.utils.filter import filter_multi
+from identity_recognition.utils.sliding import sliding_window
+from identity_recognition.utils.preprocess import descale, normlize
 
 class Inference():
     def __init__(self, cfg):

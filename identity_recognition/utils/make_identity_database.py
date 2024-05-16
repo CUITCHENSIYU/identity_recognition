@@ -2,7 +2,7 @@ import numpy as np
 import json
 from tqdm import tqdm
 import torch
-from utils.preprocess import normlize
+from .preprocess import normlize
 
 class MakeIdentityDatabase():
     def __init__(self, cfg):

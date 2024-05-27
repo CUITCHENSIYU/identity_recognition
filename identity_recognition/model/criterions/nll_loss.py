@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from utils.registry import register_module
+from identity_recognition.utils.registry import register_module
 
 if torch.cuda.is_available():
     device = torch.device("cuda")

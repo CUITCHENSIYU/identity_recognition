@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 from glob import glob
-from utils.preprocess import descale
-from utils.filter import filter_multi
+from identity_recognition.utils.preprocess import descale
+from identity_recognition.utils.filter import filter
 
 def read_data(data_dir, prefix):
     data_dir = os.path.join(data_dir, prefix)
@@ -40,11 +40,5 @@ def visualize(data, save_path):
     plt.close()
 
 if __name__ == "__main__":
-    DATA_DIR = "/mnt/gpuserver-1-disk0-nfs/chensiyu/identity_recognition/data/yl/yl1/by"
-    
-    data = read_data(DATA_DIR, "Channel")
-    data = descale(data)
-    data = data[:, 10000:15000]
-    data_full = filter_multi(data, 0.002, 0.3, sample_rate=None)
-    visualize(data_full[:, 1000:], "./data.jpg")
-
+    data = np.load("/mnt/gpuserver-1-disk0-nfs/chensiyu/identity_recognition/data/zqy/zqy5/ssvep/data/14.npy")
+    visualize(data, "1.jpg")

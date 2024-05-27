@@ -1,14 +1,10 @@
-import os
-import sys
-sys.path.append(os.path.abspath('.'))
-
 import torch
 import torch.nn as nn
 import torchvision.models as models
 import torch.nn.functional as F
 
-from model.backbone.layers import Extractor_log_spec
-from utils.registry import register_module
+from identity_recognition.model.backbone.layers import Extractor_log_spec
+from identity_recognition.utils.registry import register_module
 
 
 @register_module(parent="backbone")

@@ -11,9 +11,8 @@ import json
 import subprocess
 import shutil
 import platform
-from utils.filter import filter_multi
-from utils.sliding import sliding_window
-from utils.preprocess import descale
+from identity_recognition.utils.sliding import sliding_window
+from identity_recognition.utils.preprocess import descale
 
 system_name = platform.system()
 
@@ -28,8 +27,6 @@ class ConvertData():
         self.low_freq = cfg["data"]["low_freq"]
         self.high_freq = cfg["data"]["high_freq"]
         self.sample_rate = cfg["data"]["sample_rate"]
-        self.enable_filter = cfg["data"]["enable_filter"]
-        print(f"enable_filter = {self.enable_filter}")
 
         self.class_id_map = cfg["class_id_map"]
 
@@ -49,8 +46,6 @@ class ConvertData():
             data = np.stack([arrs], axis=0)
             data = data.squeeze()
             data = descale(data)
-            if self.enable_filter:
-                data = filter_multi(data, self.low_freq, self.high_freq, self.sample_rate)
         else:
             data = arrs[0]
         

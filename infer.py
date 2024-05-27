@@ -5,7 +5,7 @@ from collections import Counter
 from tqdm import tqdm
 
 from identity_recognition.utils.make_identity_database import MakeIdentityDatabase
-from identity_recognition.utils.filter import filter_multi
+from identity_recognition.utils.filter import filter
 from identity_recognition.utils.sliding import sliding_window
 from identity_recognition.utils.preprocess import descale, normlize
 
@@ -96,13 +96,15 @@ class Inference():
     def infer(self, data, prod_mode=False):
         if prod_mode:
             data = descale(data)
-        if self.enable_filter:
-            data = filter_multi(data, self.low_freq, self.high_freq, self.sample_rate)
-        data = normlize(data, self.mean, self.std)
         patchs = sliding_window(data, self.win_size, self.step_size)
 
         results = []
         for i, input in enumerate(tqdm(patchs)):
+            if self.enable_filter:
+                input = np.concatenate([input, input], axis=1)
+                input = filter(input, self.low_freq, self.high_freq, self.sample_rate)
+                input = input[:, int(input.shape[1]/2):]
+            input = normlize(input, self.mean, self.std)
             input = torch.tensor(input, dtype=torch.float)
             input = torch.unsqueeze(input, 0)
             score, feat = self.onnx_session.run(None, {'input':input.cpu().numpy()})
@@ -120,11 +122,11 @@ if __name__ =="__main__":
     inference = Inference(cfg)
 
     data_files = [
-        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/52.npy",
-        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/53.npy",
-        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/54.npy",
-        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/55.npy",
-        "/home/root/workspace/identity_recognition/data/zqy/zqy3/by/data/56.npy",
+        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/52.npy",
+        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/53.npy",
+        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/54.npy",
+        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/55.npy",
+        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/56.npy",
     ]
     datas = []
     for files in data_files:

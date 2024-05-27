@@ -1,12 +1,8 @@
-import os
-import sys
-sys.path.append(os.path.abspath('.'))
-
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
-from utils.registry import register_module
+from identity_recognition.utils.registry import register_module
 
 class ArcNet(nn.Module):
     def __init__(self, feature_num, cls_num):

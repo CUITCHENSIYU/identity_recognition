@@ -4,7 +4,7 @@ from glob import glob
 from tqdm import tqdm
 from scipy import signal
 from utils.preprocess import descale
-from utils.filter import filter_multi
+from utils.filter import filter
 
 def read_data(data_dir, prefix):
     data_dir = os.path.join(data_dir, prefix)
@@ -22,7 +22,7 @@ def read_data(data_dir, prefix):
         data = np.stack([arrs], axis=0)
         data = data.squeeze()
         data = descale(data)
-        # data = filter_multi(data)
+        # data = filter(data)
     else:
         data = arrs[0]
     

@@ -1,9 +1,6 @@
-import sys
-import os
-sys.path.append(os.path.abspath('.'))
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
-from utils.registry import register_module
+from identity_recognition.utils.registry import register_module
 
 @register_module(parent="evaluators")
 def evaluator(config):

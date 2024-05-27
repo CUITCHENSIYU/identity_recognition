@@ -1,15 +1,12 @@
-import sys
-import os
-sys.path.append(os.path.abspath('.'))
-
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 import torch
 import numpy as np
 import json
 
-from utils.registry import register_module
-from utils.preprocess import normlize
+from identity_recognition.utils.registry import register_module
+from identity_recognition.utils.preprocess import normlize
+from identity_recognition.utils.filter import filter
 
 @register_module(parent="input_pipelines")
 def base_dataset(cfg, split):
@@ -32,6 +29,10 @@ class DataHelper(Dataset):
         self.cfg = cfg
         self.mean = cfg['data']['mean']
         self.std = cfg['data']['std']
+        self.enable_filter = cfg["data"]["enable_filter"]
+        self.sample_rate = cfg["data"]["sample_rate"]
+        self.low_freq = cfg["data"]["low_freq"]
+        self.high_freq = cfg["data"]["high_freq"]
         file_path = cfg[split]["dataset_path"]
         with open(file_path, "r") as f:
             self.infos = f.readlines()
@@ -41,6 +42,10 @@ class DataHelper(Dataset):
     
     def prepare_input(self, data_path):
         data = np.load(data_path, allow_pickle=True)
+        if self.enable_filter:
+            data = np.concatenate([data, data], axis=1)
+            data = filter(data, self.low_freq, self.high_freq, self.sample_rate)
+            data = data[:, int(data.shape[1]/2):]
         data = normlize(data, self.mean, self.std)
         data = self.to_tensor(data)
         return data
@@ -86,8 +91,12 @@ if __name__ == "__main__":
                             104.44757708, 101.69828631, 121.41448007, 192.81180237, 130.66332279,
                             173.7997312,  233.96898104, 166.46676249, 141.72560624, 221.56806554,
                             220.0013304,  306.79795205]
+    cfg["data"]["enable_filter"] = True
+    cfg["data"]["sample_rate"] = 1000
+    cfg["data"]["low_freq"] = 5
+    cfg["data"]["high_freq"] = 45
     cfg[split] = {}
-    cfg[split]["dataset_path"] = "/mnt/gpuserver-1-disk0-nfs/chensiyu/identity_recognition/data/val.jsonl"
+    cfg[split]["dataset_path"] = "/home/root/workspace/identity_recognition/data/train.jsonl"
 
     dataloader = base_dataset(cfg, split)
     for i, batch in enumerate(dataloader, 0):

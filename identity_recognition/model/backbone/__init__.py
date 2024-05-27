@@ -1,8 +1,5 @@
-import sys
-import os
-sys.path.append(os.path.abspath('.'))
-from utils.registry import get_module
-from utils.registry import load_modules
+from identity_recognition.utils.registry import get_module
+from identity_recognition.utils.registry import load_modules
 
 def build_backbone(config):
     load_modules(__file__, "backbone")

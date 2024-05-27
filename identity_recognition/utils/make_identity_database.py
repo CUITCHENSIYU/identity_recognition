@@ -3,11 +3,17 @@ import json
 from tqdm import tqdm
 import torch
 from .preprocess import normlize
+from .filter import filter
 
 class MakeIdentityDatabase():
     def __init__(self, cfg):
         self.std = cfg["data"]["std"]
         self.mean = cfg["data"]["mean"]
+        self.enable_filter = cfg["data"]["enable_filter"]
+        self.low_freq = cfg["data"]["low_freq"]
+        self.high_freq = cfg["data"]["high_freq"]
+        self.sample_rate = cfg["data"]["sample_rate"]
+
         sample_size = cfg["inference"]["sample_size"]
         self.identity_file = cfg["inference"]["feature_file"]
         self.valid_identity = cfg["inference"]["valid_identity"]
@@ -22,6 +28,10 @@ class MakeIdentityDatabase():
     
     def prepare_input(self, data_path):
         data = np.load(data_path, allow_pickle=True)
+        if self.enable_filter:
+            data = np.concatenate([data, data], axis=1)
+            data = filter(data, self.low_freq, self.high_freq, self.sample_rate)
+            data = data[:, int(data.shape[1]/2):]
         data = normlize(data, self.mean, self.std)
         data = self.to_tensor(data)
         data = torch.unsqueeze(data, 0)

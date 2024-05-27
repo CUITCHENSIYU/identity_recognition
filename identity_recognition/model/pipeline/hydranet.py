@@ -1,13 +1,9 @@
-import os
-import sys
-sys.path.append(os.path.abspath('.'))
-
 import torch
 import torch.nn as nn
 
-from model.backbone import build_backbone
-from model.head import build_head
-from utils.registry import register_module
+from identity_recognition.model.backbone import build_backbone
+from identity_recognition.model.head import build_head
+from identity_recognition.utils.registry import register_module
 
 @register_module(parent="pipeline")
 def hydranet(cfg):

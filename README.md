@@ -15,6 +15,8 @@ mkdir data & cd data
 
 
 `Note` if you use mat format data: 
+![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/768b670f-c44f-46ea-9ae4-84827e5a1ca8)
+
 
 ## create train.jsonl
 ```

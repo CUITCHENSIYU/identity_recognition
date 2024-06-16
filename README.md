@@ -22,15 +22,14 @@ remove your data in data/ or data2/
 
 ## create train.jsonl
 ```
-cd tools
-python convert_data.py --config_path=../config/config.yaml --data_file=$(your file path) --save_file=$(save path)
+python tools/convert_data.py --config_path=../config/config.yaml --data_file=$(your file path) --save_file=$(save path)
 ```
 ![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/74e9100f-e0eb-4532-b422-a6c91f1d9c54)
 
 
 `Note` if you use mat format data:
 ```
---config_path=../config/config_mat.yaml
+python tools/convert_data_mat.py --config_path=../config/config_mat.yaml --data_file=$(your file path) --save_file=$(save path)
 ```
 
 # train

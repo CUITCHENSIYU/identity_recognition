@@ -6,8 +6,10 @@ python3 -m pip install -e .
 Here `-e` means editable mode, which is optional.
 
 # prepare train/val data
+
+you should modify train.txt/val.txt to your data path, first!
 ```
-mkdir data & cd data
+remove your data in data/ or data2/
 ```
 ![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/75b7a729-c114-4d31-881e-23b6d7fbbba7)
 ## make train.txt

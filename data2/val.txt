@@ -1,0 +1,4 @@
+/home/root/workspace/identity_recognition/data2/ltr/ltr3
+/home/root/workspace/identity_recognition/data2/wsm/wsm4
+/home/root/workspace/identity_recognition/data2/yl/yl3
+/home/root/workspace/identity_recognition/data2/zqy/zqy5

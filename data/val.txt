@@ -1,0 +1,4 @@
+/home/root/workspace/identity_recognition/data/gjc/gjc5
+/home/root/workspace/identity_recognition/data/wxr/wxr5
+/home/root/workspace/identity_recognition/data/yl/yl5
+/home/root/workspace/identity_recognition/data/zqy/zqy5

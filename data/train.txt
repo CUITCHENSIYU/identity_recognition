@@ -1,0 +1,16 @@
+/home/root/workspace/identity_recognition/data/gjc/gjc1
+/home/root/workspace/identity_recognition/data/gjc/gjc2
+/home/root/workspace/identity_recognition/data/gjc/gjc3
+/home/root/workspace/identity_recognition/data/gjc/gjc4
+/home/root/workspace/identity_recognition/data/wxr/wxr1
+/home/root/workspace/identity_recognition/data/wxr/wxr2
+/home/root/workspace/identity_recognition/data/wxr/wxr3
+/home/root/workspace/identity_recognition/data/wxr/wxr4
+/home/root/workspace/identity_recognition/data/yl/yl1
+/home/root/workspace/identity_recognition/data/yl/yl2
+/home/root/workspace/identity_recognition/data/yl/yl3
+/home/root/workspace/identity_recognition/data/yl/yl4
+/home/root/workspace/identity_recognition/data/zqy/zqy1
+/home/root/workspace/identity_recognition/data/zqy/zqy2
+/home/root/workspace/identity_recognition/data/zqy/zqy3
+/home/root/workspace/identity_recognition/data/zqy/zqy4

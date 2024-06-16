@@ -13,6 +13,7 @@ mkdir data & cd data
 ## make train.txt
 ![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/cae43883-760f-44aa-8e43-8d420e8742fc)
 
+
 `Note` if you use mat format data: 
 
 ## create train.jsonl
@@ -21,6 +22,7 @@ cd tools
 python convert_data.py --config_path=../config/config.yaml --data_file=$(your file path) --save_file=$(save path)
 ```
 ![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/74e9100f-e0eb-4532-b422-a6c91f1d9c54)
+
 
 `Note` if you use mat format data:
 ```

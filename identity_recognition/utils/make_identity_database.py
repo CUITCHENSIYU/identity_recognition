@@ -43,9 +43,9 @@ class MakeIdentityDatabase():
             line = json.loads(line)
             data_path = line["patch_path"]
             try:
-                identity_name = data_path.split("/")[-5]
+                identity_name = data_path.split("/")[-4]
             except:
-                identity_name = data_path.split("\\")[-5]
+                identity_name = data_path.split("\\")[-4]
             identity_id = self.identity_map[identity_name]
             assert identity_name in self.valid_identity, f"identity_name {identity_name} not in {self.valid_identity}"
             data = self.prepare_input(data_path)

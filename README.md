@@ -13,6 +13,8 @@ mkdir data & cd data
 ## make train.txt
 ![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/cae43883-760f-44aa-8e43-8d420e8742fc)
 
+`Note` if you use mat format data: 
+
 ## create train.jsonl
 ```
 cd tools
@@ -20,11 +22,20 @@ python convert_data.py --config_path=../config/config.yaml --data_file=$(your fi
 ```
 ![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/74e9100f-e0eb-4532-b422-a6c91f1d9c54)
 
+`Note` if you use mat format data:
+```
+--config_path=../config/config_mat.yaml
+```
+
 # train
 modify config.yaml for user config
 Note: runner_type = train_runner
 ```
 python run.py --config_path=config/config.yaml
+```
+`Note` if you use mat format data:
+```
+--config_path=../config/config_mat.yaml
 ```
 
 # test
@@ -32,14 +43,20 @@ runner_type = test_runner
 ```
 python run.py --config_path=config/config.yaml
 ```
-
+`Note` if you use mat format data:
+```
+--config_path=../config/config_mat.yaml
+```
 # deploy
 suported pt to onnx
 runner_type = deploy_runner
 ```
 python run.py --config_path=config/config.yaml
 ```
-
+`Note` if you use mat format data:
+```
+--config_path=../config/config_mat.yaml
+```
 # infer demo
 ```
 python infer.py
@@ -57,3 +74,5 @@ return: identity_map：
 if you want add or delete, please update config.yaml
 
 ![image](https://github.com/CUITCHENSIYU/identity_recognition/assets/52771861/6aba7815-a4e8-4004-b481-858ac0865719)
+
+`Note` if you use mat format data, please update config_mat.yaml

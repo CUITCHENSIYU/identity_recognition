@@ -94,8 +94,8 @@ class Inference():
                 "score": score[0]}
 
     def infer(self, data, prod_mode=False):
-        if prod_mode:
-            data = descale(data)
+        # if prod_mode:
+        #     data = descale(data)
         patchs = sliding_window(data, self.win_size, self.step_size)
 
         results = []
@@ -116,17 +116,17 @@ class Inference():
     
 if __name__ =="__main__":
     import yaml
-    config_path = "./config/config.yaml"
+    config_path = "./config/config_mat.yaml"
     cfg_file = open(config_path, 'r')
     cfg = yaml.safe_load(cfg_file)
     inference = Inference(cfg)
 
     data_files = [
-        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/52.npy",
-        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/53.npy",
-        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/54.npy",
-        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/55.npy",
-        "/home/root/workspace/identity_recognition/data/gjc/gjc5/by/data/56.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/52.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/53.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/54.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/55.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/56.npy",
     ]
     datas = []
     for files in data_files:

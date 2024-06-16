@@ -1,0 +1,81 @@
+# train, test, deploy
+runner_type: deploy_runner
+general:
+    n_class: 4
+    input_channel: 32
+    batch_size: 64
+    epoch: 20
+    workspace: ./checkpoints
+
+model:
+    pipeline_name: hydranet
+    backbone_name: resnet_50
+    head_name: classify_head
+    feature_dim: 512
+
+data:
+    mean: [-0.51, -0.15, -0.09, -0.72, -0.11, -0.17, -0.39, -0.03, -0.26, -0.06,
+           -0.44, -0.14, -1.19, -0.17, -0.05, -0.75, -21.31, -25.13, -0.05, -9.60,
+           -0.08, -0.21, -0.12, -0.27, -0.06, -0.09, -0.12, -0.61, -0.28, -0.91,
+           -18.07, -0.99]
+    std: [27.37, 14.81, 13.76, 31.81, 12.24, 13.28, 19.87, 9.24, 16.43, 10.95,
+          22.96, 14.84, 49.10, 17.24, 12.45, 30.18, 163.28, 204.12, 11.86, 97.54,
+          12.70, 12.94, 13.81, 14.97, 10.41, 13.12, 13.37, 16.84, 15.26, 22.44,
+          232.18, 21.27]
+    win_size: 1000
+    step_size: 100
+    low_freq: 5
+    high_freq: 45
+    sample_rate: 1000
+    enable_filter: false
+
+class_id_map: {
+    0: "ltr",
+    1: "wsm",
+    2: "yl",
+    3: "zqy",
+}
+
+
+optim.params:
+  weight_decay: 1.e-5
+evaluator:
+    type: evaluator
+
+train:
+    type: base_trainer
+    dataset_type: base_dataset
+    dataset_path: ./data2/train.jsonl
+    optimizer: Adam
+    initial_lr: 1.0e-4
+    lr_strategy: Cosine
+    criterions: NLLLoss #CELoss
+
+val:
+    dataset_path: ./data2/val.jsonl
+
+test:
+    model_path: ./checkpoints/2024.04.27/11-0.7806.pt
+    dataset_path: ./data2/val.jsonl
+
+inference:
+    dataset_path: ./data2/feature_file.jsonl
+    model_path: ./checkpoints/2024-06-16_17-36/4-0.9286.onnx
+    sample_size: 3
+    feature_file: "./data2/feature_file.jsonl"
+    valid_identity: ["ltr", "wsm", "yl", "zqy"]
+    conf_thres: 0.9
+    static_num: 30
+    identity_map: {
+        "ltr": 0,
+        "wsm": 1,
+        "yl": 2,
+        "zqy": 3
+    }
+
+deploy:
+    model_path: ./checkpoints/2024-06-16_17-36/4-0.9286.pt
+
+
+
+    

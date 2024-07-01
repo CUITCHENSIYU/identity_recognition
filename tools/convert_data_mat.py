@@ -23,7 +23,6 @@ class ConvertData():
         self.channel_num = cfg["general"]["input_channel"]
         self.data_file = cfg["data_file"]
         self.save_file = cfg["save_file"]
-        self.ssvep_cls_num = cfg["data"]["ssvep_cls_num"]
         self.low_freq = cfg["data"]["low_freq"]
         self.high_freq = cfg["data"]["high_freq"]
         self.sample_rate = cfg["data"]["sample_rate"]

@@ -60,7 +60,7 @@ test:
 
 inference:
     dataset_path: ./data2/feature_file.jsonl
-    model_path: ./checkpoints/2024-06-16_17-36/4-0.9286.onnx
+    model_path: ./checkpoints/2024-07-01_13-43/6-0.9198.onnx
     sample_size: 3
     feature_file: "./data2/feature_file.jsonl"
     valid_identity: ["ltr", "wsm", "yl", "zqy"]
@@ -74,7 +74,7 @@ inference:
     }
 
 deploy:
-    model_path: ./checkpoints/2024-06-16_17-36/4-0.9286.pt
+    model_path: checkpoints/2024-07-01_13-43/6-0.9198.pt
 
 
 

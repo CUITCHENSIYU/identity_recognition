@@ -1,11 +1,14 @@
 /home/root/workspace/identity_recognition/data2/ltr/ltr1
 /home/root/workspace/identity_recognition/data2/ltr/ltr2
+/home/root/workspace/identity_recognition/data2/ltr/ltr4
 /home/root/workspace/identity_recognition/data2/wsm/wsm1
 /home/root/workspace/identity_recognition/data2/wsm/wsm2
 /home/root/workspace/identity_recognition/data2/wsm/wsm3
 /home/root/workspace/identity_recognition/data2/yl/yl1
 /home/root/workspace/identity_recognition/data2/yl/yl2
+/home/root/workspace/identity_recognition/data2/yl/yl4
 /home/root/workspace/identity_recognition/data2/zqy/zqy1
 /home/root/workspace/identity_recognition/data2/zqy/zqy2
 /home/root/workspace/identity_recognition/data2/zqy/zqy3
 /home/root/workspace/identity_recognition/data2/zqy/zqy4
+/home/root/workspace/identity_recognition/data2/zqy/zqy6

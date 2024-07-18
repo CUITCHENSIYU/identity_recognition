@@ -1,7 +1,7 @@
 # train, test, deploy
 runner_type: deploy_runner
 general:
-    n_class: 4
+    n_class: 17
     input_channel: 32
     batch_size: 64
     epoch: 20
@@ -29,12 +29,25 @@ data:
     sample_rate: 1000
     enable_filter: false
 
-class_id_map: {
-    0: "ltr",
-    1: "wsm",
-    2: "yl",
-    3: "zqy",
-}
+identity_map: {
+        "ltr": 0,
+        "wsm": 1,
+        "yl": 2,
+        "zqy": 3,
+        "cjl": 4,
+        "cyl": 5,
+        "das": 6,
+        "dl": 7,
+        "gjc": 8,
+        "gr": 9,
+        "lmw": 10,
+        "lpr": 11,
+        "lsb": 12,
+        "lsh": 13,
+        "tm": 14,
+        "wjq": 15,
+        "zjq": 16
+    }
 
 
 optim.params:
@@ -60,21 +73,15 @@ test:
 
 inference:
     dataset_path: ./data2/feature_file.jsonl
-    model_path: ./checkpoints/2024-07-01_13-43/6-0.9198.onnx
+    model_path: ./checkpoints/2024-07-18_16-30/14-0.9881.onnx
     sample_size: 3
     feature_file: "./data2/feature_file.jsonl"
     valid_identity: ["ltr", "wsm", "yl", "zqy"]
     conf_thres: 0.9
     static_num: 30
-    identity_map: {
-        "ltr": 0,
-        "wsm": 1,
-        "yl": 2,
-        "zqy": 3
-    }
 
 deploy:
-    model_path: checkpoints/2024-07-01_13-43/6-0.9198.pt
+    model_path: checkpoints/2024-07-18_16-30/14-0.9881.pt
 
 
 

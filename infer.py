@@ -122,11 +122,11 @@ if __name__ =="__main__":
     inference = Inference(cfg)
 
     data_files = [
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/52.npy",
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/53.npy",
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/54.npy",
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/55.npy",
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy5/data/56.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/13.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/14.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/15.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/16.npy",
+        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/17.npy",
     ]
     datas = []
     for files in data_files:

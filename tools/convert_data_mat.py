@@ -27,23 +27,34 @@ class ConvertData():
         self.high_freq = cfg["data"]["high_freq"]
         self.sample_rate = cfg["data"]["sample_rate"]
 
-        self.class_id_map = cfg["class_id_map"]
+        self.class_id_map = cfg["identity_map"]
 
     def read_data(self, data_path):
-        data = sio.loadmat(data_path)
-        data = data["EEG"][0][0][1]
+        info = sio.loadmat(data_path, squeeze_me=False)
+        data = info["EEG"][0][0][1]
+        label = info["EEG"][0][0][5]
 
-        data = data[:, 10000:]
         mask = data > 100
         data[mask] = 0
 
-        return data
+        return data, label
+    
+    def collect_data(self, data, label):
+        results = []
+        for i in range(label.shape[0]):
+            start_idx = label[i][0][0][0][0]
+            end_idx = start_idx + 5000
+            results.append(data[:, start_idx:end_idx])
+        if len(results) == 0:
+            return None
+        results = np.concatenate(results, axis=1)
+        return results
 
-    def prepare_data(self, data, data_dir):
-        for cls_id, cls_name in self.class_id_map.items():
+    def prepare_data(self, data, data_dir, label):
+        for cls_name, cls_id in self.class_id_map.items():
             if cls_name in data_dir:
                 break
-        
+        data = self.collect_data(data, label)
         patchs = sliding_window(data, self.win_size, self.step_size)
         targets = [cls_id for i in range(len(patchs))]
         
@@ -91,14 +102,20 @@ class ConvertData():
                 data_dir = line.strip() # subject
                 
                 data_path = os.path.join(data_dir, "filter_data.mat")
-                if os.path.exists(data_path) == False:
+                raw_data_path = os.path.join(data_dir, "raw_data.mat")
+                if os.path.exists(data_path) is False:
+                    print(f"data_path: {data_path} not exists")
+                    continue
+                if os.path.exists(raw_data_path) is False:
+                    print(f"raw_data_path: {raw_data_path} not exists")
                     continue
                     
-                data = self.read_data(data_path)
+                data, _ = self.read_data(data_path)
+                _, label = self.read_data(raw_data_path)
 
                 assert data.shape[0] == self.channel_num
 
-                paths_tmp = self.prepare_data(data, data_dir)
+                paths_tmp = self.prepare_data(data, data_dir, label)
                 paths.extend(paths_tmp)
 
         with open(self.save_file, "w+") as f:

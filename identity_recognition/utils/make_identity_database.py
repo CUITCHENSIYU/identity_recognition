@@ -17,7 +17,7 @@ class MakeIdentityDatabase():
         sample_size = cfg["inference"]["sample_size"]
         self.identity_file = cfg["inference"]["feature_file"]
         self.valid_identity = cfg["inference"]["valid_identity"]
-        self.identity_map = cfg["inference"]["identity_map"]
+        self.identity_map = cfg["identity_map"]
 
         with open(self.identity_file, "r") as f:
             lines = f.readlines()
@@ -47,7 +47,10 @@ class MakeIdentityDatabase():
             except:
                 identity_name = data_path.split("\\")[-4]
             identity_id = self.identity_map[identity_name]
-            assert identity_name in self.valid_identity, f"identity_name {identity_name} not in {self.valid_identity}"
+
+            if identity_name not in self.valid_identity:
+                continue
+
             data = self.prepare_input(data_path)
 
             score, feature = onnx_session.run(None, {'input':data.cpu().numpy()})

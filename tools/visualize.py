@@ -40,5 +40,23 @@ def visualize(data, save_path):
     plt.close()
 
 if __name__ == "__main__":
-    data = np.load("/mnt/gpuserver-1-disk0-nfs/chensiyu/identity_recognition/data/zqy/zqy5/ssvep/data/14.npy")
-    visualize(data, "1.jpg")
+    lines = [
+        "test_data/real_time_data/2024-07-21-16-51-07.npy",
+        "test_data/real_time_data/2024-07-21-16-51-17.npy",
+        "test_data/real_time_data/2024-07-21-16-51-33.npy",
+        "test_data/real_time_data/2024-07-21-16-51-59.npy",
+        "test_data/real_time_data/2024-07-21-16-52-10.npy",
+        "test_data/real_time_data/2024-07-21-16-52-20.npy",
+        "test_data/real_time_data/2024-07-21-16-52-30.npy",
+        "test_data/real_time_data/2024-07-21-16-52-44.npy",
+        "test_data/real_time_data/2024-07-21-16-55-40.npy",
+        "test_data/real_time_data/2024-07-21-16-55-54.npy",
+        "test_data/real_time_data/2024-07-21-16-56-05.npy",
+        "test_data/real_time_data/2024-07-21-16-56-17.npy",
+        "test_data/real_time_data/2024-07-21-16-56-29.npy",
+        "test_data/real_time_data/2024-07-21-16-56-39.npy"
+    ]
+    for line in lines:
+        save_path = line.split("/")[-1].replace("npy", "jpg")
+        data = np.load(line)
+        visualize(data, save_path)

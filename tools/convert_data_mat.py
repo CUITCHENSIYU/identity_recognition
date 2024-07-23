@@ -33,10 +33,6 @@ class ConvertData():
         info = sio.loadmat(data_path, squeeze_me=False)
         data = info["EEG"][0][0][1]
         label = info["EEG"][0][0][5]
-
-        mask = data > 100
-        data[mask] = 0
-
         return data, label
     
     def collect_data(self, data, label):

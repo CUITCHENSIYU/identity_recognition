@@ -3,6 +3,7 @@ import numpy as np
 import torch
 from collections import Counter
 from tqdm import tqdm
+import scipy.io as sio
 
 from identity_recognition.utils.make_identity_database import MakeIdentityDatabase
 from identity_recognition.utils.filter import filter
@@ -121,18 +122,26 @@ if __name__ =="__main__":
     cfg = yaml.safe_load(cfg_file)
     inference = Inference(cfg)
 
-    data_files = [
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/13.npy",
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/14.npy",
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/15.npy",
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/16.npy",
-        "/home/root/workspace/identity_recognition/data2/zqy/zqy8/data/17.npy",
+    lines = [
+        "data2/test_data/real_time_data/2024-07-23-10-56-11.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-56-23.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-56-33.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-56-43.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-57-01.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-57-14.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-57-38.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-58-04.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-58-16.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-58-31.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-58-47.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-58-59.mat",
+        "data2/test_data/real_time_data/2024-07-23-10-59-09.mat"
     ]
-    datas = []
-    for files in data_files:
-        data = np.load(files)
-        datas.append(data)
-    data = np.concatenate(datas, 1)
-    # 如果是部署生产环境，prod_mode=True, 若是读取本地文件用于测试，prod_mode=False <default>
-    identity_map = inference.infer(data, prod_mode=False) 
-    print(identity_map)
+    for line in lines:
+        if line.endswith("npy"):
+            data = np.load(line)
+        elif line.endswith("mat"):
+            data = sio.loadmat(line)["data"]
+        # 如果是部署生产环境，prod_mode=True, 若是读取本地文件用于测试，prod_mode=False <default>
+        identity_map = inference.infer(data, prod_mode=False) 
+        print(identity_map)

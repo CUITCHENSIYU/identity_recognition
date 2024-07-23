@@ -15,8 +15,8 @@ def run(data_file):
             paths.append(data)
     
     paths = np.concatenate(paths, axis=1)
-    print(f"mean = {np.mean(paths, axis=1)}")
-    print(f"std = {np.std(paths, axis=1)}")
+    print(f"min = {np.min(paths, axis=1)}")
+    print(f"max = {np.max(paths, axis=1)}")
 
 if __name__ == "__main__":
     data_file = "data2/train.jsonl"
